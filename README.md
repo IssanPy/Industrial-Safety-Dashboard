@@ -1,87 +1,79 @@
-# Industrial Safety Dashboard  
-Real-time industrial telemetry monitoring with HS&E-aligned alerting, incident logging, a Streamlit dashboard, and a 3D turbine visualization that reacts to system health.
+Industrial Safety Dashboard
 
-![status](https://img.shields.io/badge/status-active-success)
-![python](https://img.shields.io/badge/Python-3.8+-blue)
-![streamlit](https://img.shields.io/badge/Streamlit-dashboard-red)
-![license](https://img.shields.io/badge/license-MIT-green)
+Industrial Safety Dashboard is an adapted open-source monitoring system that simulates industrial telemetry, detects service outages, logs incidents, and visualizes system health in real time. This version adds an interactive Streamlit dashboard, file-based alert logging for safe demos, timeline analytics, and a small 3D turbine visual whose color and speed reflect alert state.
 
----
+This project demonstrates HS&E-aligned alerting behavior, monitoring pipelines, incident recording, and operator-facing visualization — material directly relevant to energy operations and predictive-maintenance workflows.
 
-## 🚀 Overview
-Industrial Safety Dashboard is an enhanced monitoring system designed to simulate industrial telemetry, detect service outages, and visualize system health in real-time.  
-Built for operations, reliability engineering, and HS&E workflows, the platform:
+Features
 
-- Monitors services using retry thresholds  
-- Detects failures & recoveries intelligently  
-- Logs all alerts into a structured incident file  
-- Provides an interactive dashboard to visualize system health  
-- Includes a **3D turbine** whose **color & speed change** when alerts fire  
+Continuous monitoring of configured endpoints (APIs / operator portals).
 
-This project is ideal for demonstrating monitoring workflows used in the **energy, industrial, and safety engineering** sectors.
+Retry mechanism and configurable thresholds for robust detection.
 
----
+Smart detection of failures and recoveries with alert suppression.
 
-## 🛠 Features
-### Monitoring Engine
-- Continuous monitoring of configured endpoints  
-- Configurable retry logic, thresholds & alert intervals  
-- Smart detection of failure & recovery states  
-- Rotating logfile (`monitor_servicios.log`)  
-- Demo-safe alerting (writes to `alerts.json` instead of sending SMTP emails)
+File-based alert logging (alerts.json) for safe demos (SMTP optional).
 
-### Dashboard (Streamlit)
-- Live status table  
-- Incident log viewer  
-- Incident timeline chart (Plotly)  
-- Buttons to simulate failures  
-- Embedded **3D turbine** (Three.js) that reflects alert state  
+Live state store (status_store.json) used by the dashboard.
 
-### 3D Visualization
-- Normal state → green turbine, slow rotation  
-- Alert state → red turbine, fast rotation  
+Streamlit dashboard with:
 
----
+Status table (service, status, failures, last checked)
 
-## 📂 Project Structure
+Incident log (alerts.json)
+
+Incidents timeline chart
+
+Buttons to simulate failures and clear alerts
+
+Embedded 3D turbine visual (Three.js) that changes color/rotation on alerts
+
+Rotating logfile (monitor_servicios.log).
+
+English translation of the monitoring engine and clear demo hooks.
+
+Project layout
 Industrial-Safety-Dashboard/
-│
-├── monitoring/
-│ └── monitoreo.py # Monitoring engine (English + alert logging)
-│
-├── app/
-│ └── streamlit_app.py # Streamlit dashboard + 3D turbine
-│
-├── config.json # Configurable endpoints & thresholds
-├── status_store.json # Generated: live service state
-├── alerts.json # Generated: incident log
-├── monitor_servicios.log # Generated: rotating log file
-├── requirements.txt
-└── README.md
+├─ monitoring/
+│  └─ monitoreo.py          # Main monitor (English, safe demo mode)
+├─ app/
+│  └─ streamlit_app.py      # Streamlit dashboard + 3D visual
+├─ config.json              # Configuration (endpoints, thresholds, logging)
+├─ requirements.txt         # Python dependencies
+├─ status_store.json        # Generated: stores live status
+├─ alerts.json              # Generated: incident log
+├─ monitor_servicios.log    # Generated rotating log
+└─ README.md                # This file
 
-yaml
-Copy code
+Prerequisites
 
----
+Python 3.8+
 
-## ⚙️ Installation
+pip (package manager)
 
-### 1. Create virtual environment
-```bash
-python -m venv .venv
-source .venv/bin/activate     # Mac/Linux
-.venv\Scripts\activate.ps1    # Windows PowerShell
-2. Install dependencies
-bash
-Copy code
+Git (optional, for pushing to GitHub)
+
+Internet access for demo endpoints and Three.js CDN
+
+Write permissions in project directory
+
+Required Python packages
+
+Minimal packages required (add others if needed):
+
+requests==2.28.1
+streamlit==1.22.0
+plotly==5.15.0
+
+
+Install via:
+
 pip install -r requirements.txt
-🧩 Configuration
-Edit config.json to set endpoints and thresholds.
 
-Example:
+Configuration
 
-json
-Copy code
+Edit config.json to list the endpoints and tune thresholds. Example (already provided in repo):
+
 {
   "websites": {
     "Telemetry-API-01": "https://postman-echo.com/get?service=telemetry1",
@@ -101,84 +93,18 @@ Copy code
     "alert_threshold": 2,
     "recovery_threshold": 2,
     "alert_repeat_interval": 120
+  },
+  "logging_settings": {
+    "enable_file_logging": true,
+    "max_bytes": 5242880,
+    "backup_count": 5,
+    "log_file": "monitor_servicios.log"
   }
 }
-Leaving "sender_password": "" enables safe demo mode.
-
-▶️ Running the Monitor
-Start the real-time monitor:
-
-bash
-Copy code
-python monitoring/monitoreo.py
-This creates:
-
-status_store.json
-
-alerts.json
-
-monitor_servicios.log
-
-🖥️ Running the Dashboard
-Open a second terminal:
-
-bash
-Copy code
-streamlit run app/streamlit_app.py
-Dashboard features:
-
-Live service table
-
-Incident logs
-
-Timeline analytics
-
-Buttons: “Simulate Failure” & “Clear Alerts”
-
-Interactive 3D turbine
-
-📊 Demo Flow (great for internship interviews)
-Start the monitor
-
-Open dashboard
-
-Click Simulate Failure
-
-Watch:
-
-alerts.json update
-
-Incident log update
-
-Turbine turn red and spin faster
-
-Clear incidents to reset
-
-Perfect 20–30s demo for recruiters.
-
-🔧 Future Improvements (optional)
-Add real sensor ingestion
-
-Add role-based authentication
-
-Add machine learning anomaly detection
-
-Add WebSocket push updates
-
-📜 License
-MIT License — free to use and modify.
-
-⭐ If you find this useful, star the repository!
 
 
+Notes:
 
+Leave sender_password empty for demo mode (alerts go to alerts.json instead of SMTP).
 
-
-
-
-
-
-
-
-
-
+check_interval is seconds between cycles. Lower for faster demos.
