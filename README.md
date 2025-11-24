@@ -169,7 +169,6 @@ Add WebSocket push updates
 MIT License — free to use and modify.
 
 ⭐ If you find this useful, star the repository!
-It helps the project grow and makes your GitHub look more active.
 
 
 
@@ -182,4 +181,4 @@ It helps the project grow and makes your GitHub look more active.
 
 
 
-ChatGPT can make mistakes. Che
+
